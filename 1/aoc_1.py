@@ -14,10 +14,14 @@ print(change)
 
 
 #2
+prevsum = input[0] + input[1] + input[2]
+change = 0
+
 for i in range(len(input)-2):
 
     sum = input[i] + input[i+1] + input[i+2]
-    if sum > prev
+    if sum > prevsum:
         change +=1
-    prev = i
+    prevsum = sum
+
 print(change)
