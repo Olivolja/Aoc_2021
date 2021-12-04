@@ -1,33 +1,22 @@
 import math
 input = open("4/input.txt").read().split("\n")
 
-# print([(type(x),x) for x in input[2]]) 
-
 def part1(input):
     draws = input[0].split(",")
     del input[:2] #input is now "" ,lines in board, ""
-
     boards = generate_boards(input)
-
     for number in draws:
-
         for board_i in range(len(boards)):
             for row in range(len(boards[board_i])):
                 for e in range(len(boards[board_i][row])):
                     #check number and replase with x if exist
                     if boards[board_i][row][e] == number:
-                        # print("ok")
                         boards[board_i][row][e]  = "x"
                     #check if winner exist
                     winning_table = check_win(boards)
                     if(winning_table):
-
-                        return sum_board(boards[winning_table] * int(number))
-
-    print(boards)
-    score = 0
-    return score
-
+                        return sum_board(boards[winning_table]) * int(number)
+    return False
 
 def sum_board(board):
     sum = 0
@@ -52,6 +41,7 @@ def generate_boards(boardlines):
 
 def check_win(boards):
     winning_table = False
+
     for table_index, table in enumerate(boards):
         for row_i, row in enumerate(table):
             if row == ["x", "x", "x", "x", "x"]:
@@ -63,6 +53,5 @@ def check_win(boards):
             if row == ["x", "x", "x", "x", "x"]:
                 winning_table = table_index
     return winning_table
-
 
 print(part1(input))
