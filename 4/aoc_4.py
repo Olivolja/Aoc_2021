@@ -79,15 +79,14 @@ def part2(input):
                     #check number and replase with x if exist
                     if boards[board_i][row][e] == number:
                         boards[board_i][row][e]  = "x"
-                    #check if winner exist
+                    #check if winners
                     wins = check_wins(boards)
                     if(len(wins) == len(boards)-1):
-                        #one has not won
                         left = set(range(0,98)) - wins
                     if(len(wins) == len(boards)):
                         return sum_board(boards[left.pop()]) * int(number)
     return False
 
-# print(f"Part 1: {part1(input)}")
-
+print(f"Part 1: {part1(input)}")
+input = open("4/input.txt").read().split("\n")
 print(f"Part 2: {part2(input)}")
