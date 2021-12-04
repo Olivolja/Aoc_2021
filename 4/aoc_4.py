@@ -1,6 +1,5 @@
 import math
 input = open("4/input.txt").read().split("\n")
-
 def part1(input):
     draws = input[0].split(",")
     del input[:2] #input is now "" ,lines in board, ""
@@ -54,4 +53,41 @@ def check_win(boards):
                 winning_table = table_index
     return winning_table
 
-print(part1(input))
+def check_wins(boards):
+    winning_tables = set([])
+
+    for table_index, table in enumerate(boards):
+        for row_i, row in enumerate(table):
+            if row == ["x", "x", "x", "x", "x"]:
+                winning_tables.add(table_index)
+
+    for table_index, table in enumerate(boards):
+        trasnposed_table = list(map(list, zip(*table)))
+        for row_i, row in enumerate(trasnposed_table):
+            if row == ["x", "x", "x", "x", "x"]:
+                winning_tables.add(table_index)
+    return winning_tables
+
+def part2(input):
+    draws = input[0].split(",")
+    del input[:2] #input is now "" ,lines in board, ""
+    boards = generate_boards(input)
+    for number in draws:
+        for board_i in range(len(boards)):
+            for row in range(len(boards[board_i])):
+                for e in range(len(boards[board_i][row])):
+                    #check number and replase with x if exist
+                    if boards[board_i][row][e] == number:
+                        boards[board_i][row][e]  = "x"
+                    #check if winner exist
+                    wins = check_wins(boards)
+                    if(len(wins) == len(boards)-1):
+                        #one has not won
+                        left = set(range(0,98)) - wins
+                    if(len(wins) == len(boards)):
+                        return sum_board(boards[left.pop()]) * int(number)
+    return False
+
+# print(f"Part 1: {part1(input)}")
+
+print(f"Part 2: {part2(input)}")
