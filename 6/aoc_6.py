@@ -24,9 +24,9 @@ def part1(input):
         day += 1
     return len(fishes)
 
-def part2(input):
+def part1_recursive(input):
     fishes = input #clone list cuz idk
-    days = 256 
+    days = 80 
     sum = 0
     for f in fishes:
         sum += fish(f, days)
@@ -41,8 +41,21 @@ def fish(me, days):
         children += fish(8, days-1)
     else:
         me -= 1
-
     return fish(me, days-1) + children
+
+# This part is heavily inspired by https://github.com/flippeman
+def part2(input):
+    school = [0]*7
+    gingergarden = [0,0]
+    days = 256
+    for fish in input:
+        school[fish] += 1
+    for i in range(0, days, 1):
+        new_fish = school[i%7]
+        school[i%7] += gingergarden.pop(0)
+        gingergarden.append(new_fish)
+        new_fish = 0
+    return sum(school) + sum(gingergarden)
 
 
 print("part 1:")
