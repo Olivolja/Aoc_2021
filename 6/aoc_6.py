@@ -26,21 +26,24 @@ def part1(input):
 
 def part2(input):
     fishes = input #clone list cuz idk
-    days = 10
-    day = 0
-    current_fishes = len(fishes)
+    days = 256 
+    sum = 0
+    for f in fishes:
+        sum += fish(f, days)
+    return sum
 
-    while day < days:
-        temp_fishes = [] 
-        zeros = len([x for x in fishes if x==0])
-        #print("ok")
-        temp_fishes.append([8]*zeros)
-            
-        fishes = [x-1 if x != 0 else x for x in fishes ]
-        fishes.append(temp_fishes)
-        #print(fishes) # print evolution
-        day += 1
-    return len(fishes)
+def fish(me, days):
+    children = 0
+    if days == 0:
+        return 1
+    if(me <= 0):
+        me = 6
+        children += fish(8, days-1)
+    else:
+        me -= 1
+
+    return fish(me, days-1) + children
+
 
 print("part 1:")
 print(part1(example))
@@ -50,4 +53,4 @@ input = [int(x) for x in open("6/input.txt").read().split(",")]
 example = [int(x) for x in open("6/example.txt").read().split(",")]
 
 print("part 2:")
-print(part2(example))
+print(part2(input))
